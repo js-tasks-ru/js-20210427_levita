@@ -10,7 +10,6 @@ export const pick = (obj, ...fields) => {
     for (const [key, value] of Object.entries(obj)){
         if (fields.includes(key)){
             picked[key] = value
-            console.log(picked)
         }
     }
     return picked
