@@ -19,14 +19,3 @@ export function createGetter(path) {
         return value
     }
 }
-
-
-
-// const product = {
-//   category: {
-//     title: "Goods"
-//   }
-// }
-// const getter = createGetter('category.title');
-
-// console.log(getter(product));
