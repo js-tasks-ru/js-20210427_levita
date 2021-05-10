@@ -5,9 +5,9 @@
  */
 export function createGetter(path) {
     const keys = path.split('.');
+    let value;
 
     return function (obj) {
-        let value;
 
         function getProp(prop){
             return value ? value[prop] : obj[prop]
