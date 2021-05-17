@@ -89,7 +89,7 @@ describe('dom-document-loading/sortable-table-v1', () => {
     const { body } = sortableTable.subElements;
     const firstRow = body.firstElementChild;
     const lastRow = body.lastElementChild;
-
+    console.log(firstRow.children)
     expect(firstRow.children[cellIndex].textContent).toEqual('Детский велосипед Lexus Trike Racer Trike');
     expect(lastRow.children[cellIndex].textContent).toEqual('Powerbank аккумулятор Hiper SP20000');
   });

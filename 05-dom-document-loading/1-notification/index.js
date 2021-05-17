@@ -24,7 +24,6 @@ export default class NotificationMessage {
             </div>
         `
         this.element = div.firstElementChild;
-        console.log(this.element)
     }
 
     show(el) {
