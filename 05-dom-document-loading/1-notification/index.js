@@ -26,14 +26,12 @@ export default class NotificationMessage {
         this.element = div.firstElementChild;
     }
 
-    show(el) {
+    show(el = document.body) {
         this.__proto__.element ? this.__proto__.element.remove() : null;
-        el = el ? el : document.body;
         el.append(this.element);
         setTimeout(() => {
             this.remove()
         }, this.duration);
-
         this.__proto__.element = this.element;
     }
 
