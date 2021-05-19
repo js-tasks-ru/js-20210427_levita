@@ -6,23 +6,18 @@ export default class SortableTable {
 		this.data = data
 
 		this.render()
-		console.log(this)
 	}
 
 	getRows() {
-		return this.data.map(item => {
-			return `
-				<a href="/products/${item.id}" class="sortable-table__row">
-					<div class="sortable-table__cell">
-						<img class="sortable-table-image" alt="Image" src="${item.images ? item.images[0].url : 'https://via.placeholder.com/32' }">
-					</div>
-					<div class="sortable-table__cell">${item.title}</div>
-					<div class="sortable-table__cell">${item.quantity}</div>
-					<div class="sortable-table__cell">${item.price}</div>
-					<div class="sortable-table__cell">${item.sales}</div>
-				</a>`
-			}).join('')
-	}
+		return this.data.map((row) => (
+		`<div class='sortable-table__row'>
+			${ this.headerConfig.map(({ id, template }) => (
+			typeof template === 'function' ? template(row[id]) :
+			`<div class='sortable-table__cell'>${ row[id] }</div>`
+		)).join('') }
+		</div>`))
+		.join('');
+	  }
 
 	getHeaders(){
 		return this.headerConfig.map(item => {
@@ -32,21 +27,30 @@ export default class SortableTable {
 		}).join('')
 	}
 
-	sort(fieldValue, orderValue) {
-		const { sortType } = this.headerConfig.find(({ id }) => id === fieldValue)
-		function sortStrings(arr, param = 'asc') {
-			return arr.sort( (a, b) => {
-				if(param === 'desc') {
-					return  -String(a[fieldValue]).localeCompare(String(b[fieldValue]), "ru", {caseFirst:"upper", numeric: sortType === 'number'})
-				} else if (param === 'asc'){
-					return String(a[fieldValue]).localeCompare(String(b[fieldValue]), "ru", {caseFirst:"upper", numeric: sortType === 'number'})
-				}
-				throw new Error();
-			})
-		}  
-		console.log(this.data)
-		sortStrings(this.data, orderValue)
+	sort(field, order) {
+		this.sortData(order, field)
 		this.updateRows()
+	}
+
+	sortData (order, field) {
+		const column = this.headerConfig.find(item => item.id === field);
+		const { sortType } = column;
+		const directions = {
+		asc: 1,
+		desc: -1
+		};
+		const direction = directions[order];
+	
+		this.data.sort((a, b) => {
+		switch (sortType) {
+		case 'number':
+			return direction * (a[field] - b[field]);
+		case 'string':
+			return direction * a[field].localeCompare(b[field], ['ru', 'en']);
+		default:
+			return direction * (a[field] - b[field]);
+		}
+		});
 	}
 
 	updateRows() {
