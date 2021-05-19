@@ -23,6 +23,9 @@ export default class SortableTable {
 		return this.headerConfig.map(item => {
 			return `<div class="sortable-table__cell" data-id="${item.id}" data-sortable="${item.sortable}" data-order="">
 						<span>${item.title}</span>
+						<span data-element="arrow" class="sortable-table__sort-arrow">
+							<span class="sort-arrow"></span>
+						</span>
 					</div>	`
 		}).join('')
 	}
@@ -30,6 +33,17 @@ export default class SortableTable {
 	sort(field, order) {
 		this.sortData(order, field)
 		this.updateRows()
+
+		const allColumns = this.element.querySelectorAll('.sortable-table__cell[data-id]');
+		const currentColumn = this.element.querySelector(`.sortable-table__cell[data-id="${field}"]`);
+	
+		// NOTE: Remove sorting arrow from other columns
+		allColumns.forEach(column => {
+			column.dataset.order = '';
+		});
+	
+		currentColumn.dataset.order = order;
+	
 	}
 
 	sortData (order, field) {
