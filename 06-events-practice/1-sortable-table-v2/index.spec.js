@@ -90,7 +90,6 @@ describe('events-practice/sortable-table-v2', () => {
   it('should sort "desc" correctly for "sortType" equal string', () => {
     const { children } = sortableTable.subElements.header;
     const [title] = children;
-
     const pointerdown = new MouseEvent('pointerdown', {
       bubbles: true
     });

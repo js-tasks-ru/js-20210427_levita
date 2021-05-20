@@ -17,7 +17,7 @@ export default class SortableTable {
 		)).join('') }
 		</div>`))
 		.join('');
-	  }
+	}
 
 	getHeaders(){
 		return this.headerConfig.map(item => {

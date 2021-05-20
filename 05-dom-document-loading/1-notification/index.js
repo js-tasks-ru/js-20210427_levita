@@ -8,7 +8,7 @@ export default class NotificationMessage {
     } = {}){
         if (NotificationMessage.enableElement) {
             NotificationMessage.enableElement.remove();
-          }
+        }
         this.message = message;
         this.duration = duration;
         this.type = type;
