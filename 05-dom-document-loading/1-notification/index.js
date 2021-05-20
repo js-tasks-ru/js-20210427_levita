@@ -1,9 +1,14 @@
 export default class NotificationMessage {
+    static enableElement;
+
     constructor(message = '', 
     {
         duration = 2000,
         type = 'success'
     } = {}){
+        if (NotificationMessage.enableElement) {
+            NotificationMessage.enableElement.remove();
+          }
         this.message = message;
         this.duration = duration;
         this.type = type;
@@ -24,24 +29,26 @@ export default class NotificationMessage {
             </div>
         `
         this.element = div.firstElementChild;
+        NotificationMessage.enableElement = this.element;
     }
 
     show(el = document.body) {
-        this.__proto__.element ? this.__proto__.element.remove() : null;
         el.append(this.element);
         setTimeout(() => {
             this.remove()
         }, this.duration);
-        this.__proto__.element = this.element;
+        
     }
 
     remove() {
-        this.element.remove();
-        this.__proto__.element ? this.__proto__.element.remove() : null
+        if (this.element) {
+            this.element.remove();
+        }
     }
 
     destroy() {
-        this.element.remove();
-        this.__proto__.element ? this.__proto__.element.remove() : null
+        this.remove()
+        this.element = null;
+        NotificationMessage.enableElement = null;
     }
 }
