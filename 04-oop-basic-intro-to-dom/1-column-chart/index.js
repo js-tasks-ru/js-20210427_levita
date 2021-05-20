@@ -4,7 +4,7 @@ export default class ColumnChart {
         label = '',
         link = '',
         value = 0,
-        formatHeading = null
+        formatHeading = data => data
     } = {}) {
         this.data = data;
         this.label = label;
@@ -16,7 +16,7 @@ export default class ColumnChart {
     chartHeight = 50
 
     renderColumns() {
-        if(this.data.length ?? false) {
+        if(this.data.length || false) {
             return this.data.map(item => {
                 return ` <div style="--value: ${this.getColumnHeight(item).value}" data-tooltip="${this.getColumnHeight(item).percent}"></div>`
             }).join('')
@@ -26,12 +26,7 @@ export default class ColumnChart {
     }
 
     skelet() {
-        if (this.data.length) {
-            return '';
-        } else {
-            return 'column-chart_loading'
-        }
-        
+        return this.data.length ? '' : 'column-chart_loading'
     }
 
     formatHeading(data) {
@@ -56,8 +51,8 @@ export default class ColumnChart {
         }
     }
     getLink () {
-        if (!this.link) return ``
-        return `<a href="${this.link}" class="column-chart__link">View all</a>`
+        return this.link ? `<a href="${this.link}" class="column-chart__link">View all</a>` : ``;
+    
     }
     
     render() {
@@ -77,7 +72,7 @@ export default class ColumnChart {
             </div>
         </div>
         `;
-        this.element = div.firstChild.nextSibling
+        this.element = div.firstElementChild
     }
 
     destroy(){
