@@ -4,8 +4,8 @@ export default class SortableTable {
 	constructor(headerConfig = [], {data = [], isSortLocally = true, sorted = null} = {}) {
 		this.headerConfig = headerConfig;
 		this.data = data;
-    this.isSortLocally = isSortLocally;
-    this.sorted = sorted
+		this.isSortLocally = isSortLocally;
+		this.sorted = sorted
 		this.render()
 	}
 
@@ -22,15 +22,15 @@ export default class SortableTable {
 
 	getHeaders(){
 
-    let defaultSort = item => {
-      if(!this.sorted) return '';
+		let defaultSort = item => {
+		if(!this.sorted) return '';
 
-      if(this.sorted.id === item ) {
-        this.sortOnClient(item, this.sorted.order)
-        return this.sorted.order
-      }
-      else ''
-    }
+		if(this.sorted.id === item ) {
+			this.sortOnClient(item, this.sorted.order, true)
+			return this.sorted.order
+		}
+		else ''
+		}
 
 		return this.headerConfig.map(item => {
 			return `<div class="sortable-table__cell" data-id="${item.id}" data-sortable="${item.sortable}" data-order="${defaultSort(item.id)}">
@@ -41,9 +41,9 @@ export default class SortableTable {
 					</div>	`
 		}).join('')
 	}
-  sortOnClient(field, order, defaultSort = false) {
-    this.sortData(field, order)
-    if(!defaultSort) return
+  	sortOnClient(field, order, defaultSort) {
+		this.sortData(field, order)
+		if(defaultSort) return
 
 		this.updateRows()
 		const allColumns = this.element.querySelectorAll('.sortable-table__cell[data-id]');
@@ -53,25 +53,25 @@ export default class SortableTable {
 		});
 	
 		currentColumn.dataset.order = order;
-  }
+	}
 
 	sort(event) {
-    const target = event.target;
-    console.log(event)
-    const el = target.closest('.sortable-table__cell');
+		const target = event.target;
+		console.log(event)
+		const el = target.closest('.sortable-table__cell');
   
-    if (el.dataset.sortable === 'false') {
-      return
-    }
+		if (el.dataset.sortable === 'false') {
+		return
+		}
 
-    let field = el.dataset.id;
-    let order = el.dataset.order === 'desc' ? 'asc' : 'desc'
-    
-    if (this.isSortLocally) {
-      this.sortOnClient(field, order, true);
-    } else {
-      this.sortOnServer();
-    }
+		let field = el.dataset.id;
+		let order = el.dataset.order === 'desc' ? 'asc' : 'desc'
+		
+		if (this.isSortLocally) {
+			this.sortOnClient(field, order);
+		} else {
+			this.sortOnServer();
+		}
 	}
 
 	sortData (field, order) {
