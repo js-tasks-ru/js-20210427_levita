@@ -11,44 +11,51 @@ class Tooltip {
     }
 
     addListeners(){
-        const divs = document.querySelectorAll('[data-tooltip]');
-        divs.forEach(item => {
-            item.addEventListener('pointerover', ev => this.renderTextTooltip(ev))
-            item.addEventListener('mousemove', ev => this.moveTooltip(ev))
-            item.addEventListener('pointerout', ev => this.clearTooltip(ev))
-        })
+
+        document.addEventListener('pointerover', this.onPointerOver, true);
+        document.addEventListener('pointerout', this.clearTooltip);
+
     }
-    renderTextTooltip(ev) {
-        this.message = ev.target.dataset.tooltip;
-        this.element.textContent = this.message
-        document.body.append(this.element)
+    onPointerOver = ev => {
+
+        const element = ev.target.closest('[data-tooltip]');
+
+        if (element) {
+            this.render(element.dataset.tooltip);
+            document.addEventListener('pointermove', this.moveTooltip);
+        }
+
     }
 
-    clearTooltip() {
+    clearTooltip = () => {
         this.message = '';
         this.element.remove()
     }
-    moveTooltip(ev) {
-        
+
+    moveTooltip = ev =>  {
         const pageX = ev.clientX
         const pageY = ev.clientY
         this.element.style.top = `${pageY}px`
         this.element.style.left = `${pageX}px`
     }
 
-    render() {
-        const div = document.createElement('div');
-        div.innerHTML = `
-            <div class="tooltip">${this.message}</div>
-        `
-        this.element = div.firstElementChild;
+    render(html) {
+        this.element = document.createElement('div');
+        this.element.className = 'tooltip';
+        this.element.innerHTML = html;
+        document.body.append(this.element);
     }
+
+
     initialize() {
         this.addListeners()
     }
 
     destroy() {
         this.element.remove()
+        document.removeEventListener('pointerover', this.onPointerOver, true);
+        document.removeEventListener('pointerout', this.clearTooltip);
+        document.removeEventListener('pointermove', this.moveTooltip);
     }
 
 }
