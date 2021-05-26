@@ -104,7 +104,7 @@ export default class SortableTable {
 
 		const fetchData = fetchJson(this.url)
 			
-		fetchData.then(res => {
+		return fetchData.then(res => {
 			resetCount ? this.data = [...res] : this.data.push(...res)
 			this.updateRows()
 		}) 		
@@ -208,7 +208,7 @@ export default class SortableTable {
 
 		this.element = div.firstElementChild
 		this.subElements = this.getSubElements(this.element);
-		this.loadData()
+		await this.loadData()
 		this.addListeners()
 	}
 
