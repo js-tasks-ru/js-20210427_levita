@@ -225,10 +225,3 @@ export default class SortableTable {
 		this.element.remove()
 	}
 }
-
-{/* <div data-element="emptyPlaceholder" class="sortable-table__empty-placeholder">
-				<div>
-				<p>No products satisfies your filter criteria</p>
-				<button type="button" class="button-primary-outline">Reset all filters</button>
-				</div>
-			</div> */}

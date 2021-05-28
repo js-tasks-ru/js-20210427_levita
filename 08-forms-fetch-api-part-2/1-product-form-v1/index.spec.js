@@ -102,7 +102,7 @@ describe('forms-fetch-api-part-2/product-form-v1', () => {
 
     const [event] = spyDispatchEvent.mock.calls;
 
-    expect(event[0].type).toEqual('product-updated');
+    expect(event[0].type).toEqual('product-saved');
   });
 
   it('should have ability to be removed', () => {
