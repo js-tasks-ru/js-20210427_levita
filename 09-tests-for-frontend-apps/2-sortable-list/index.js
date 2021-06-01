@@ -46,7 +46,6 @@ export default class SortableList {
         const sortItem = event.target.closest('.sortable-list__item:not(.sortable-list__item_dragging)');
 
         if(sortItem) {
-            console.log('s')
             this.replaceElem(sortItem)
         }
     }
