@@ -57,7 +57,6 @@ export default class SortableTable {
 
 	sort(event) {
 		const target = event.target;
-		console.log(event)
 		const el = target.closest('.sortable-table__cell');
   
 		if (el.dataset.sortable === 'false') {

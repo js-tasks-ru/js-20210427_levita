@@ -26,7 +26,6 @@ export default class ProductForm {
 	}
 
 	async loadProduct(id = '', options = {}) {
-		console.log(options)
 		const productUrl = new URL(this.url)
 		productUrl.pathname = '/api/rest/products';
 		if (id) productUrl.searchParams.set('id', id)
@@ -46,7 +45,6 @@ export default class ProductForm {
 			this.product = this.product ? this.product[0] : []
 			this.element = this.getForm()
 			this.subElements = this.getSubElements(this.element);
-			console.log(this)
 			this.initEvents()
 			return this.element
 		});
@@ -171,9 +169,6 @@ export default class ProductForm {
 		`
 		return div = div.firstElementChild
 	}
-	formSave(formdData){
-
-	}
 
 	loadForm = async e => {
 		e.preventDefault()
@@ -218,9 +213,6 @@ export default class ProductForm {
 		}	
 	}
 
-	loadImageBtn = e => {
-
-	}
 
 	initEvents() {
 		const saveBtn = this.element.querySelector('button[name="save"]'),

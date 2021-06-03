@@ -103,6 +103,7 @@ body {
   border: 1px solid var(--blue);
   margin: 0;
   z-index: 10000;
+  pointer-events: none;
 }
 
 .sortable-list__placeholder {
