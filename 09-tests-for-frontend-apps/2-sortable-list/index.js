@@ -8,7 +8,6 @@ export default class SortableList {
 
     initListeners() {
         this.element.addEventListener('pointerdown', event => this.dragOn(event))
-        
     }
 
     dragEnd = () => this.dragOff()
@@ -22,7 +21,6 @@ export default class SortableList {
         }
 
         this.dragElem = event.target.closest('.sortable-list__item');
-        
         const elemWidth = this.dragElem.clientWidth
         const elemHeight = this.dragElem.clientHeight
         this.dragElem.style.width = elemWidth + 'px'
@@ -98,6 +96,4 @@ export default class SortableList {
     remove() {
 		this.element.remove();
 	}
-
-
 }
